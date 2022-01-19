@@ -1,0 +1,105 @@
+EGILEAK
+
+	ARLO PEDAGOGIKOAN:
+		Montse Martínez De Carlos
+		Yayo Salegi Rivera
+	Kolaboratzailea:
+		Alex Gastañazpi Zaldua
+
+	ARLO INFORMATIKOAN
+		Txano Ansa
+
+
+
+Harremanetarako: galderak, iritziak, proposamenak,...
+
+	Korreo elektronikoa: lizarra@ikastola.net
+	Telefonoa: 948 55 37 57
+JUSTIFIKABIDEA
+	Programa honen helburu nagusia zenbakiak izendatzerakoan 
+edota kodifikatzerakoan zailtasunak dituen ikasleari laguntzea da. 
+Eragile indartsuena, guk, laguntza irakasleak garenok, arazo honi 
+erantzuna emateko izan dugun beharra izan da.
+	Gure ikasle gehienen ama hizkuntza gaztelera da. Hori dela 
+eta, zenbakien antolakuntza sistema hamartarrean kokatzen da, 
+zeinek laguntzen duen zenbakiak izendatzeko. Euskararen kasuan 
+ez da gauza bera gertatzen zeren, zenbakiak sistema hogeitarrean 
+antolatzeaz gain, kontzeptuen (bateko, hamarreko, hogeiko) arteko 
+erlazio aritmetikoa ere kontuan hartu behar da. Honen ondorioz 
+ikasleek zailtasunak aurki ditzakete zenbakiak zuzenki izendatzean. 
+Bateko, hamarreko eta hogeiko kontzeptuak menperatzeak 
+zenbakiak izendatzeko ikasteko erraztasuna ematen duela uste 
+dugu.
+	Hasieratik , hamarrekoek barruan hamar bateko eta hogeikoak 
+barruan bi hamarreko edo hogei bateko (gauza bera dela) 
+dituztelako ideiei garrantzi handia eman diegu. Alegia , kontinentzia 
+ideiari. Era honetan, kotinentzia ideia azpimarratuz, ikasleak bola 
+bakoitzari kolorearen arabera dagokion balorea ematera heltzen dira 
+arlo konkretutik abstraktuarainoko bidea eginez zenbakiak 
+izendatzeko lagungarri izanik.
+	Matematika hamartarrean hogeikoaren kontzeptua oso 
+justifikagarria ez dela onartzen badugu ere, zaigu euskarazko 
+zenbakien nomenklaturaren ikaste prozesuan behar-beharrezkoa, 
+gure esperientziak horrela dio eta.
+
+
+
+PROGRAMAREN DESKRIBAPENA
+	Programa lau bloketan egituratzen da:
+		1.- 0tik 9ra. Aurkezpena eta ariketak.
+		2.- Hurrengo kontzeptuen aurkezpena:
+- hamarreko
+- hogeiko
+      eta beste hogeikoen irakurketarako baharrezkoak 
+diren erlazio aritmetikoak
+- berrogei
+- hirurogei
+- laurogei
+3.- Zenbakiak aztertzen: ikaslearen azterketa 
+ahalbideratzen duena.
+		Zenbakiak lantzen: aurkeztutako zenbakiari 
+dagokion kopurua lortzea helburu  duena.
+		4.- Ariketak:
+-	Zenbakiak kodetu aldagai bakar bat edota 
+gehiago izanik (ahotsa, kopurua, edota izena).
+-	Zenbakien izena idatzi bi aldagai edota gehiago 
+emanez.
+
+
+
+
+
+
+
+
+
+PROGRAMAREN ERABILPENA
+	Programa erabiltzen hasi baino lehen, ikasleak zenbakiak 0tik 
+9ra menperatzea komenigarria dela uste dugu.
+	Geroxeago, zenbakiak hamarnaka (10-19, 20-29,...) lantzea 
+proposatzen dugu, hurrengoari garrantzia emanez:
+	- 10 – 19:	* Irudikapen grafikoa: bola urdin bat eta beste 
+batzuk (ala ez) gorriak.
+			* Irudikapen grafiko honen esanahia: bola urdina 
+egoteak adierazten du ahoskatu behar dela: "hama...", "heme..."
+	- 20 – 29: 	*Irudikapen grafikoa: bola berde bat eta beste 
+batzuk (ala ez) gorriak.
+			* Irudikapen grafiko honen esanahia: bola berde 
+bat egoteak adierazten du ahoskatu behar dela: "hogei", "hogeita...".
+	- 30 eta hurrengoak::
+			* Aztertu behar zenbat bola berde dagoen eta 
+horren arabera izendatu:
+-	1: hogei
+-	2:berrogei
+-	3: hirurogei
+-	4: laurogei
+* Bola urdina badago: "hama..."
+* Zenbat bola gorri dagoen ikusi eta honen arabera 
+zenbakia esan 
+
+	Ikasleari ikustarazi behar diogu kopuruaren irakurketak, 
+hamaika agertzen denean izan ezik, zenbakiaren izena ematen 
+duela.
+	Gure azken helburua da ikaslea, entzuten dituen zenbakiak 
+digituetan kodifikatzeko gai izatera hel dadin.
+

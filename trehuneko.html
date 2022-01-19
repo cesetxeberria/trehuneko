@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html>
+<style>
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.nm-button {
+  font-weight: bold;
+}
+
+p {
+
+  text-align: center;
+  font-size: 80px;
+
+}
+
+trena {
+  width: 90vw;
+  height: auto;
+}
+
+</style>
+
+<body>
+
+<table class="center">
+  <tr>
+    <td>
+      <input id="bolaKendu1" type="button" class="nm-button" value="-1"/>
+    </td>
+    <td>
+       <svg width="50" height="50">
+         <circle cx="25" cy="25" r="20" stroke="black" stroke-width="3" fill="red" />
+       </svg> 
+    </td> 
+    <td>
+      <input id="bolaGehitu1" type="button" class="nm-button" value="+1"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <input id="bolaKendu10" type="button" class="nm-button" value="-10"/>
+    </td>
+    <td>
+       <svg width="50" height="50">
+         <circle cx="25" cy="25" r="20" stroke="black" stroke-width="3" fill="blue" />
+       </svg> 
+    </td> 
+    <td>
+      <input id="bolaGehitu10" type="button" class="nm-button" value="+10"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <input id="bolaKendu20" type="button" class="nm-button" value="-20"/>
+    </td>
+    <td>
+       <svg width="50" height="50">
+         <circle cx="25" cy="25" r="20" stroke="black" stroke-width="3" fill="green" />
+       </svg> 
+    </td> 
+    <td>
+      <input id="bolaGehitu20" type="button" class="nm-button" value="+20"/>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <input id="entzun" type="button" class="nm-button" value="Entzun"/>
+    </td> 
+    <td></td>
+  </tr>
+</table>
+
+<svg xmlns="http://www.w3.org/2000/svg" id="trena"/></svg>
+
+<p id="kontagailua"></p>
+<p id="izena"></p>
+
+</body>
+</html> 
+
+
+<script type="text/javascript">
+    //aldagaiak
+    const svg = document.getElementById('trena');
+    const svgns = "http://www.w3.org/2000/svg";
+    // objetuen tamaina eta kopurua
+    const bagoiZabalera = 350;
+    const bagoiAltuera = 350;
+
+    function entzun(){ 
+        zenbatBola = window.zenbatBola;
+        let soinua = document.createElement('audio');
+        soinua.setAttribute('src', 'fitxategiak/'+zenbatBola+'.wav');
+        soinua.setAttribute('type', 'audio/wav');
+	soinua.play();
+    }
+    function trenBerria(){ 
+        zenbatBola = window.zenbatBola;
+        let hamarkada = Math.floor(zenbatBola/10);
+        let zenbatBagoi = hamarkada + 1;
+
+        // marazkiaren tamaina aldatu
+        let zabaleraTotala = bagoiZabalera * (zenbatBagoi + 1);
+
+        if (zenbatBagoi < 5){
+            svg.setAttribute("viewBox","0 0 " + bagoiZabalera * 6 + " " + bagoiAltuera +" ");
+        }
+        else{
+            svg.setAttribute("viewBox","0 0 " + zabaleraTotala + " " + bagoiAltuera +" ");
+        }
+
+        let trena = trenaMarraztu(zenbatBagoi); 
+        svg.appendChild(trena);
+    }
+
+    function trenaKendu(){ 
+        let trenZaharra = document.getElementById('trenOsoa');
+        svg.removeChild(trenZaharra);
+    }
+ 
+    function trenaMarraztu(zenbatBagoi) {
+        let soberan = window.zenbatBola % 10;
+        //taldea sortu eta izendatu
+        let taldea = document.createElementNS(svgns, 'g');
+        taldea.setAttribute("id", 'trenOsoa'); 
+
+	//lokomotora marraztu
+        let lokomotora = lokomotoraMarraztu();
+        taldea.appendChild(lokomotora);
+        //bagoiak marraztu
+        for (i = 1; i < zenbatBagoi; i++) { 
+            taldea.appendChild(bagoiaMarraztu(i,0));
+        }
+        if (soberan != 0){
+            taldea.appendChild(bagoiaMarraztu(zenbatBagoi,soberan));
+        }
+        return taldea;
+    }
+
+    function bolaGehitu(zenbat){
+        if (window.zenbatBola + zenbat < 101){
+            window.zenbatBola = window.zenbatBola + zenbat;
+            document.getElementById("kontagailua").innerHTML = window.zenbatBola;
+            document.getElementById("izena").innerHTML = izenaLortu(window.zenbatBola);
+            trenaKendu();
+            trenBerria();
+        }
+    }
+
+    function bolaKendu(zenbat){
+        if (window.zenbatBola - zenbat > 0){
+            window.zenbatBola = window.zenbatBola - zenbat;
+            document.getElementById("kontagailua").innerHTML = window.zenbatBola;
+            document.getElementById("izena").innerHTML = izenaLortu(window.zenbatBola);
+            trenaKendu();
+            trenBerria();
+        }
+    }
+
+    function lokomotoraMarraztu() {
+        //taldea sortu
+        let taldea = document.createElementNS(svgns, 'g');
+
+	//marraztu elementuak
+        let oina = karratuaMarraztu(0,200,340,20);
+        let motorea = karratuaMarraztu(20,100,320,100);
+        let tximinia1 = karratuaMarraztu(60,70,20,30);
+        let tximinia2 = karratuaMarraztu(50,50,40,20);
+        let tximinia3 = karratuaMarraztu(40,40,60,10);
+        let kabinaezker = karratuaMarraztu(200,20,30,80);
+        let kabinaeskuin = karratuaMarraztu(310,20,30,80);
+        let kabinagoi = karratuaMarraztu(190,0,160,20);
+        let gurpilak = gurpilakMarraztu(0);
+
+        koloreaJarri(oina,"yellow","black");
+        koloreaJarri(motorea,"yellow","black");
+        koloreaJarri(tximinia1,"green","black");
+        koloreaJarri(tximinia2,"blue","black");
+        koloreaJarri(tximinia3,"red","black");
+        koloreaJarri(kabinaezker,"yellow","black");
+        koloreaJarri(kabinaeskuin,"yellow","black");
+        koloreaJarri(kabinagoi,"yellow","black");
+        koloreaJarri(gurpilak,"yellow","black");
+
+        //taldekatu elementuak
+        taldea.appendChild(oina);
+        taldea.appendChild(motorea);
+        taldea.appendChild(tximinia1);
+        taldea.appendChild(tximinia2);
+        taldea.appendChild(tximinia3);
+        taldea.appendChild(kabinaezker);
+        taldea.appendChild(kabinaeskuin);
+        taldea.appendChild(kabinagoi);
+        taldea.appendChild(gurpilak);
+        return taldea;
+    }
+
+    function bagoiaMarraztu(zenbatgarrena,soberan) {
+        //bagoi kopurua kontatu
+        let zenbatBagoi = Math.floor(window.zenbatBola/10) + 1;
+
+        //posizioak kalkulatu 
+        let posizioa = zenbatgarrena * bagoiZabalera;
+
+        //bagoiak binaka elkartu
+        if (zenbatgarrena % 2 ==0){
+            posizioa = posizioa - 10;
+        }
+
+        posizioaBolak = posizioa + 50;
+
+        //taldea sortu
+        let taldea = document.createElementNS(svgns, 'g');
+
+        //marraztu elementuak
+        let hamarOina = hamarrekoaMarraztu(posizioa); 
+        let hamarTapa = hamarrekoTapaMarraztu(posizioa); 
+        let hogeiOina = hogeikoaMarraztu(posizioa);
+        let hogeiTapa = hogeikoTapaMarraztu(posizioa); 
+        let gurpilak = gurpilakMarraztu(posizioa);
+
+	//izenak jarri
+        taldea.setAttribute("id", 'bagoia' + zenbatgarrena); 
+        hamarTapa.setAttribute("id", 'bagoia' + zenbatgarrena + 'hamarTapa'); 
+        hogeiTapa.setAttribute("id", 'bagoia' + zenbatgarrena + 'hogeiTapa'); 
+
+        //margotu elementuak
+        koloreaJarri(hamarOina,"blue","black");
+        koloreaJarri(hamarTapa,"blue","black");
+        koloreaJarri(hogeiOina,"green","black");
+        koloreaJarri(hogeiTapa,"green","black");
+        koloreaJarri(gurpilak,"yellow","black");
+
+        //tapak ezkutatu
+        hamarTapa.setAttribute("display", 'none');
+        hogeiTapa.setAttribute("display", 'none');
+
+        //taldekatu elementuak
+        taldea.appendChild(hamarOina);
+        taldea.appendChild(hamarTapa);
+        taldea.appendChild(hogeiOina);
+        taldea.appendChild(hogeiTapa);
+        taldea.appendChild(gurpilak);
+
+        //beteta badago margotu tapak
+        if (soberan == 0){
+            hamarTapa.setAttribute("display", 'inline');
+            hogeiTapa.setAttribute("display", 'inline');
+            for (let j = 0; j < 9; j++) {
+                let zirkulua = zirkuluaMarraztu(posizioaBolak+(j*30),165,10);
+                koloreaJarri(zirkulua,"red","black");
+                taldea.appendChild(zirkulua);
+            }        
+        } else {
+            for (let j = 0; j < soberan; j++) { 
+                let zirkulua = zirkuluaMarraztu(posizioaBolak+(j*30),165,10);
+                koloreaJarri(zirkulua,"red","black");
+                taldea.appendChild(zirkulua);
+            }
+        }
+        
+        //azkenaurreko bagoia eta bakoitia bada, kendu tapa berdea
+        if ((zenbatgarrena % 2 == 1) && (zenbatgarrena == zenbatBagoi - 1)){
+            hogeiTapa.setAttribute("display", 'none');
+        }
+
+        izenakJarri(taldea,posizioa,zenbatgarrena,zenbatBagoi);
+
+        return taldea;
+    }
+
+    function izenakJarri(taldea,posizioa,zenbatgarrena,zenbatBagoi) {
+        //izenak idatzi
+
+        let bat = testuaMarraztu(posizioa,100,"bat");
+        let ika = testuaMarraztu(posizioa,100,"ika");
+        let bi = testuaMarraztu(posizioa,100,"bi");
+        let hiru = testuaMarraztu(posizioa,100,"hiru");
+        let lau = testuaMarraztu(posizioa,100,"lau");
+        let bost = testuaMarraztu(posizioa,100,"bost");
+        let sei = testuaMarraztu(posizioa,100,"sei");
+        let zazpi = testuaMarraztu(posizioa,100,"zazpi");
+        let zortzi = testuaMarraztu(posizioa,100,"zortzi");
+        let bederatzi = testuaMarraztu(posizioa,100,"bederatzi");
+        let retzi = testuaMarraztu(posizioa,100,"retzi");
+
+        let ber = testuaMarraztu(posizioa+190,100,"ber");
+        let hirur = testuaMarraztu(posizioa+170,100,"hirur");
+        let laur = testuaMarraztu(posizioa+170,100,"laur");
+        let hogei = testuaMarraztu(posizioa+130,100,"hogei");
+        let hamar = testuaMarraztu(posizioa+170,100,"hamar");
+        let hogeita = testuaMarraztu(posizioa,100,"hogeita");
+        let hama = testuaMarraztu(posizioa+170,100,"hama");
+        let heme = testuaMarraztu(posizioa+170,100,"heme");
+
+        //izenak margotu
+        koloreaJarri(bat,"red","black");
+        koloreaJarri(ika,"red","black");
+        koloreaJarri(bi,"red","black");
+        koloreaJarri(hiru,"red","black");
+        koloreaJarri(lau,"red","black");
+        koloreaJarri(bost,"red","black");
+        koloreaJarri(sei,"red","black");
+        koloreaJarri(zazpi,"red","black");
+        koloreaJarri(zortzi,"red","black");
+        koloreaJarri(bederatzi,"red","black");
+        koloreaJarri(retzi,"red","black");
+
+        koloreaJarri(ber,"green","black");
+        koloreaJarri(hirur,"green","black");
+        koloreaJarri(laur,"green","black");
+        koloreaJarri(hogei,"green","black");
+        koloreaJarri(hamar,"blue","black");
+        koloreaJarri(hogeita,"green","black");
+        koloreaJarri(hama,"blue","black");
+        koloreaJarri(heme,"blue","black");
+
+        //izenak ezkutatu
+        bat.setAttribute("display", 'none');
+        ika.setAttribute("display", 'none');
+        bi.setAttribute("display", 'none');
+        hiru.setAttribute("display", 'none');
+        lau.setAttribute("display", 'none');
+        bost.setAttribute("display", 'none');
+        sei.setAttribute("display", 'none');
+        zazpi.setAttribute("display", 'none');
+        zortzi.setAttribute("display", 'none');
+        bederatzi.setAttribute("display", 'none');
+        retzi.setAttribute("display", 'none');
+
+        ber.setAttribute("display", 'none');
+        hirur.setAttribute("display", 'none');
+        laur.setAttribute("display", 'none');
+        hogei.setAttribute("display", 'none');
+        hamar.setAttribute("display", 'none');
+        hogeita.setAttribute("display", 'none');
+        hama.setAttribute("display", 'none');
+        heme.setAttribute("display", 'none');
+
+        //izenak taldekatu
+        taldea.appendChild(bat);
+        taldea.appendChild(ika);
+        taldea.appendChild(bi);
+        taldea.appendChild(hiru);
+        taldea.appendChild(lau);
+        taldea.appendChild(bost);
+        taldea.appendChild(sei);
+        taldea.appendChild(zazpi);
+        taldea.appendChild(zortzi);
+        taldea.appendChild(bederatzi);
+        taldea.appendChild(retzi);
+
+
+        taldea.appendChild(ber);
+        taldea.appendChild(hirur);
+        taldea.appendChild(laur);
+        taldea.appendChild(hogei);
+        taldea.appendChild(hamar);
+        taldea.appendChild(hogeita);
+        taldea.appendChild(hama);
+        taldea.appendChild(heme);
+
+        //azkeneko bagoia bada, idatzi zenbakia
+        if (zenbatgarrena == zenbatBagoi){
+            if (window.zenbatBola % 10 == 1){
+                bat.setAttribute("display", 'inline');
+              //baina bagoia bikoitia bada idatzi ika
+              if (zenbatgarrena % 2 == 0){
+                  bat.setAttribute("display", 'none');
+                  ika.setAttribute("display", 'inline');
+              }
+            }
+            if (window.zenbatBola % 10 == 2){
+                bi.setAttribute("display", 'inline');
+            }
+            if (window.zenbatBola % 10 == 3){
+                hiru.setAttribute("display", 'inline');
+            }
+            if (window.zenbatBola % 10 == 4){
+                lau.setAttribute("display", 'inline');
+            }
+            if (window.zenbatBola % 10 == 5){
+                bost.setAttribute("display", 'inline');
+            }
+            if (window.zenbatBola % 10 == 6){
+                sei.setAttribute("display", 'inline');
+            }
+            if (window.zenbatBola % 10 == 7){
+                zazpi.setAttribute("display", 'inline');
+            }
+            if (window.zenbatBola % 10 == 8){
+                zortzi.setAttribute("display", 'inline');
+            }
+            if (window.zenbatBola % 10 == 9){
+                bederatzi.setAttribute("display", 'inline');
+              //baina bagoia bikoitia bada idatzi retzi
+              if (zenbatgarrena % 2 == 0){
+                  bederatzi.setAttribute("display", 'none');
+                  retzi.setAttribute("display", 'inline');
+              }
+            }
+        }
+        //azkenaurreko bagoia eta bakoitia bada, kendu tapa berdea eta jarri hama testua
+        if ((zenbatgarrena % 2 == 1) && (zenbatgarrena == zenbatBagoi - 1)){
+              hama.setAttribute("display", 'inline');
+              //baina 8 edo 9-rekin jarri heme
+              if ((window.zenbatBola % 10 == 8) || (window.zenbatBola % 10 == 9)){
+                  hama.setAttribute("display", 'none');
+                  heme.setAttribute("display", 'inline');
+              }
+        }
+        //azkenaurreko edo azken-azkenaurreko bagoia eta bikoitia bada, jarri hogeita testua 
+        if ((zenbatgarrena % 2 == 0) && ((zenbatgarrena == zenbatBagoi - 1) || (zenbatgarrena == zenbatBagoi - 2))){
+              hogeita.setAttribute("display", 'inline');
+        }
+        //hirugarren bagoian jarri ber testua 
+        if ((zenbatgarrena == 3) && ((zenbatBagoi == 5) || (zenbatBagoi == 6))){
+              ber.setAttribute("display", 'inline');
+        }
+        //bostgarren bagoian jarri hirur testua
+        if ((zenbatgarrena == 5) && ((zenbatBagoi == 7) || (zenbatBagoi == 8))){
+              hirur.setAttribute("display", 'inline');
+        }
+        //zazpigarren bagoian jarri laur testua
+        if ((zenbatgarrena == 7) && ((zenbatBagoi == 9) || (zenbatBagoi == 10))){
+              laur.setAttribute("display", 'inline');
+        }
+        //hamarren multiplo zehatza bada idatzi hamar hama ordez
+        if ((window.zenbatBola % 10 == 0) && (zenbatgarrena == zenbatBagoi - 1)){
+              hama.setAttribute("display", 'none');
+              hamar.setAttribute("display", 'inline');
+              //baina hogeiren multiplo zehatza bada idatzi hogei
+              if (window.zenbatBola % 20 == 0){
+                  hamar.setAttribute("display", 'none');
+                  hogeita.setAttribute("display", 'none');
+                  hogei.setAttribute("display", 'inline');
+                  if (window.zenbatBola % 100 == 0){
+                      hogei.setAttribute("display", 'none');
+                  }
+              }
+        }
+
+        return taldea;
+    }
+
+
+    function koloreaJarri(taldea,barruan,kanpoan) {
+        taldea.setAttribute("fill", barruan);
+        taldea.setAttribute("stroke", kanpoan);
+        return taldea;
+    }
+    function hamarrekoTapaMarraztu(posizioa) {
+        let taldea = document.createElementNS(svgns, 'g');
+        let tapa = karratuaMarraztu(posizioa+20,130,300,20);
+        taldea.appendChild(tapa);
+        return taldea;
+    }
+
+    function hamarrekoaMarraztu(posizioa) {
+        let taldea = document.createElementNS(svgns, 'g');
+        let ezker = karratuaMarraztu(posizioa+20,150,20,30);
+        let eskubi = karratuaMarraztu(posizioa+300,150,20,30);
+        let behean = karratuaMarraztu(posizioa+20,180,300,20);
+        taldea.appendChild(ezker);
+        taldea.appendChild(eskubi);
+        taldea.appendChild(behean);
+        return taldea;
+    }
+
+    function hogeikoaMarraztu(posizioa) {
+        let taldea = document.createElementNS(svgns, 'g');
+        let ezker = karratuaMarraztu(posizioa+0,130,20,70);
+        let eskubi = karratuaMarraztu(posizioa+320,130,20,70);
+        let behean = karratuaMarraztu(posizioa+0,200,340,20);
+        taldea.appendChild(ezker);
+        taldea.appendChild(eskubi);
+        taldea.appendChild(behean);
+        return taldea;
+    }
+
+    function hogeikoTapaMarraztu(posizioa) {
+        let taldea = document.createElementNS(svgns, 'g');
+        let tapa = karratuaMarraztu(posizioa+0,110,340,20);
+        taldea.appendChild(tapa);
+        return taldea;
+    }
+
+    function gurpilakMarraztu(posizioa) {
+        let taldea = document.createElementNS(svgns, 'g');
+        let makila = karratuaMarraztu(posizioa+50,255,240,10);
+        let gurpila1 = zirkuluaMarraztu(posizioa+290,260,30);
+        let gurpila2 = zirkuluaMarraztu(posizioa+170,260,30);
+        let gurpila3 = zirkuluaMarraztu(posizioa+50,260,30);
+        gurpila1.setAttribute("stroke-width", 30);
+        gurpila2.setAttribute("stroke-width", 30);
+        gurpila3.setAttribute("stroke-width", 30);
+        taldea.appendChild(makila);
+        taldea.appendChild(gurpila1);
+        taldea.appendChild(gurpila2);
+        taldea.appendChild(gurpila3);
+        return taldea;
+    }
+
+    function karratuaMarraztu(x,y,zabalera,altuera) {
+        let karratua = document.createElementNS(svgns, 'rect');
+        karratua.setAttributeNS(null, 'x', x);
+        karratua.setAttributeNS(null, 'y', y);
+        karratua.setAttributeNS(null, 'width', zabalera);
+        karratua.setAttributeNS(null, 'height', altuera);
+        return karratua;      
+    }
+    function zirkuluaMarraztu(cx,cy,erradioa) {
+        let zirkulua = document.createElementNS(svgns, 'circle');
+        zirkulua.setAttributeNS(null, 'cx', cx);
+        zirkulua.setAttributeNS(null, 'cy', cy);
+        zirkulua.setAttributeNS(null, 'r', erradioa);
+        return zirkulua;     
+    }
+
+    function testuaMarraztu(x,y,mezu) {
+        let testua = document.createElementNS(svgns, 'text');
+        testua.setAttributeNS(null,"x",x);     
+        testua.setAttributeNS(null,"y",y); 
+        testua.setAttributeNS(null,"font-size","60");
+        let mezua = document.createTextNode(mezu);
+        testua.appendChild(mezua);
+        return testua;
+    }
+
+    function izenaLortu(zenbakia){
+        let bukaerak = ['zero','bat','bi','hiru','lau','bost','sei','zazpi','zortzi','bederatzi','hamar','hamaika','hamabi','hamahiru','hamalau','hamabost','hamasei','hamazazpi','hemezortzi','hemeretzi'];
+        if (zenbakia == 100){
+            return "ehun";
+        }
+        if (zenbakia < 20) {       
+            return bukaerak[zenbakia % 20];
+        }
+        if (zenbakia < 40) {
+            if (zenbakia % 20 == 0){
+                return "hogei";
+            }
+            else{
+                let izena = "hogeita ";
+                return izena+bukaerak[zenbakia % 20];
+            }
+        }
+        if (zenbakia < 60) {
+            if (zenbakia % 20 == 0){
+                return "berrogei";
+            }
+            else{
+                let izena = "berrogeita ";
+                return izena+bukaerak[zenbakia % 20];
+            }
+        }
+        if (zenbakia < 80) {
+            if (zenbakia % 20 == 0){
+                return "hirurogei";
+            }
+            else{
+                let izena = "hirurogeita ";
+                return izena+bukaerak[zenbakia % 20];
+            }
+        }
+        if (zenbakia < 100) {
+            if (zenbakia % 20 == 0){
+                return "laurogei";
+            }
+            else{
+                let izena = "laurogeita ";
+                return izena+bukaerak[zenbakia % 20];
+            }
+        }
+    }
+
+    function init(){
+        //lehenengo trena
+        trenBerria();
+
+        document.getElementById("kontagailua").innerHTML = window.zenbatBola;
+        document.getElementById("izena").innerHTML = izenaLortu(window.zenbatBola);
+
+        document.getElementById('bolaGehitu1').onclick=function(){bolaGehitu(1);};        
+        document.getElementById('bolaKendu1').onclick=function(){bolaKendu(1);};
+        document.getElementById('bolaGehitu10').onclick=function(){bolaGehitu(10);};        
+        document.getElementById('bolaKendu10').onclick=function(){bolaKendu(10);};
+        document.getElementById('bolaGehitu20').onclick=function(){bolaGehitu(20);};        
+        document.getElementById('bolaKendu20').onclick=function(){bolaKendu(20);};
+        document.getElementById('entzun').onclick=function(){entzun();};
+    }
+    window.onload=init;
+    window.zenbatBola=11;
+</script>
