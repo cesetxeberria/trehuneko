@@ -591,6 +591,13 @@ trena {
             }
         }
     }
+	
+    // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    // Retorna un entero aleatorio entre min (incluido) y max (excluido)
+    // ¡Usando Math.round() te dará una distribución no-uniforme!
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
 
     function init(){
         //lehenengo trena
@@ -608,5 +615,5 @@ trena {
         document.getElementById('entzun').onclick=function(){entzun();};
     }
     window.onload=init;
-    window.zenbatBola=11;
+    window.zenbatBola=getRandomInt(1, 100);
 </script>
